@@ -9,6 +9,12 @@ export const FlexContainer = styled.div`
   row-gap: ${props => props.gap || 0}em;
 `;
 
+export const FlexContainerColumn = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: ${props => props.gap || 0}em;
+`;
+
 export const FlexItem = styled.div`
   width: ${props => props.widthPercent || 50}%;
 `;
