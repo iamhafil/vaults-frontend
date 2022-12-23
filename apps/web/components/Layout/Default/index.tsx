@@ -1,20 +1,20 @@
-import React, { useState } from 'react';
-import Header from './Header';
-import Footer from './Footer';
-import Navigation from './Navigation';
+import React, { useState } from "react";
+import Header from "./Header";
+import Footer from "./Footer";
+import Navigation from "./Navigation";
 // import UserPanel from './UserPanel';
 
-const DashboardLayout = ({ children,Breadcrumb }) => {
-  const [collapsed, setCollapsed] = useState(false)
+const DashboardLayout = ({ children, Breadcrumb }) => {
+  const [collapsed, setCollapsed] = useState(false);
 
-  const onCollapse = collapsed => {
+  const onCollapse = (collapsed) => {
     console.log(collapsed);
     setCollapsed(collapsed);
   };
 
   return (
-
     <React.Fragment>
+      <Header />
       <div className="main-container clearfix">
         <Navigation></Navigation>
         <article className="connex-main-content right-wrapper">
@@ -24,11 +24,9 @@ const DashboardLayout = ({ children,Breadcrumb }) => {
           </div>
           <Footer></Footer>
         </article>
-      </div> 
+      </div>
     </React.Fragment>
-
   );
-
-}
+};
 
 export default DashboardLayout;

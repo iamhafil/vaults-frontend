@@ -15,7 +15,7 @@ const Footer = ({ }) => {
       .</p>
       </div>
       <div className="copy-right">
-        © 2022 SAFQAT. All Rights Reserved.
+        © 2022 VAULTS. All Rights Reserved.
         </div>
     </footer>
   );

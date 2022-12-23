@@ -5,7 +5,12 @@ const nextConfig = {
   reactStrictMode: true,
   typescript: {
     ignoreBuildErrors: true,
-  }
+  },
+  i18n: {
+    locales: ['en',],
+    defaultLocale: 'en',
+    localeDetection: false,
+  },
 };
 
 module.exports = withTM(nextConfig);

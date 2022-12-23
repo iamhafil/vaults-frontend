@@ -17,20 +17,7 @@ const UserPanel = ({ Breadcrumb }) => {
     signOut();
   };
 
-  const getProfile = async() => {
-    let data = await api.get("auth/profile-header");
 
-    if (data) {
-      setSupplierName(data?.data?.data?.supplier?.repName)
-      setSupplierLogo(data?.data?.data?.supplier?.storeLogo?.url)
-    }
-  }
-
-  useEffect(() => {
-    api.defaults.headers.common["Authorization"] =
-    "Bearer " + session?.user?.email?.jwtToken;
-    getProfile()
-  }, [session]);
 
   const handleNotificationClick = () => {
     setVisible(true);
@@ -64,76 +51,7 @@ const UserPanel = ({ Breadcrumb }) => {
             </>
           )}
         </div>
-        <div className="right-wrapper">
-          <div className="logo-wrapper d-sm-block d-lg-none">
-            <div className="brand">
-              <a>
-                <img
-                  className="img-fluid"
-                  src="/images/SFQ-Logo011.png"
-                  alt="safqat"
-                />
-              </a>
-            </div>
-          </div>
-          <div className="panel-actions">
-            {/*<span
-              className="notification"
-              onClick={() => handleNotificationClick()}
-            ></span>*/}
-            <span className="help mobile-none" onClick={showHelpModal}></span>
-            <div className="user-actions">
-              <div className="drop-down">
-                <a class="user-name">
-                  {/* <span
-                    class="image"
-                    style={{
-                      backgroundImage: `url(${session.user.email.avathar})`,
-                    }}></span> */}
-                  {session &&
-                  session.user &&
-                  session.user.email &&
-                  supplierLogo ? (
-                    <span
-                      class="image"
-                      style={{
-                        backgroundImage: `url(${supplierLogo})`,
-                      }}
-                    />
-                  ) : (
-                    <span
-                      class="image"
-                      style={{
-                        backgroundImage: `url("https://connex-storage.s3.ap-south-1.amazonaws.com/images/20.+Account.svg")`,
-                      }}
-                    />
-                  )}
-                  {session ? session.user.name : null}
-                </a>
-                <ul class="drop-down-list mt-0">
-                  <li>
-                    <a href="/profile">{t("myProfile")}</a>
-                  </li>
-                  <li>
-                    <a href="/profile/shipping">{t("shipping")}</a>
-                  </li>
-                  <li>
-                    <a href="/profile/addresses">{t("myAddresses")}</a>
-                  </li>
-                  <li>
-                    <a href="/profile/payments">{t("payments")}</a>
-                  </li>
-                  <li>
-                    <a href="/profile/preferances">{t("preferences")}</a>
-                  </li>
-                  <li>
-                    <a onClick={logout}>{t("logOut")}</a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
+        
       </section>
 
       <Modal

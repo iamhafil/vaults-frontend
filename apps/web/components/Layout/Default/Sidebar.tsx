@@ -235,11 +235,7 @@ const SideBar = ({ }) => {
         <Link href={"/"} legacyBehavior>
           <div className="brand">
             <a>
-              <img
-                className="img-fluid"
-                src="/images/SFQ-Logo011.png"
-                alt="safqat"
-              />
+              VAULT
             </a>
           </div>
         </Link>
@@ -252,7 +248,7 @@ const SideBar = ({ }) => {
               <MenuItem
                 index="/"
                 menuClassName="my-dashboard"
-                title={t("myDashboard")}
+                title={"Dashboard"}
                 subtitle=""
                 href="/"
               ></MenuItem>
@@ -260,14 +256,9 @@ const SideBar = ({ }) => {
               <MenuItem
                 index="products"
                 menuClassName="product"
-                title={t("product")}
-                subtitle={t("listOfProducts")}
+                title={"Vaults"}
+                subtitle={""}
                 href="#"
-                subMenu={[
-                  { title: t("allProducts"), link: "/products" },
-                  { title: t("addNewProducts"), link: "/products/add" },
-                  { title: t("mediaLibrary"), link: "/products/medias" },
-                ]}
               ></MenuItem>
              
             </Menu>

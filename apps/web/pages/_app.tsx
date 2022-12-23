@@ -7,7 +7,6 @@ import "./../styles/css/style.css";
 import "./../styles/css/fixes.css";
 
 import DashboardLayout from "./../components/Layout/Default";
-import UserPanel from "./../components/Layout/Default/UserPanel";
 
 import Router, { useRouter } from "next/router";
 
@@ -20,11 +19,9 @@ function MyApp({ Component, pageProps }: AppProps) {
   let url = router.pathname;
 
   let Layout: any = AppLayout;
-  const Breadcrumb = Component?.Breadcrumb || UserPanel;
+  const Breadcrumb = Component?.Breadcrumb;
 
-  if (!url.indexOf("/dashboard")) {
-    Layout = DashboardLayout;
-  }
+  Layout = DashboardLayout;
 
   return (
     <MetaMaskProvider>

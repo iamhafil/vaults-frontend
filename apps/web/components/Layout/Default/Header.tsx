@@ -1,57 +1,92 @@
-import { useSession } from "next-auth/client";
-import Link from "next/link"
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
-import { api } from "../../../libraries/api";
-import { setCookie } from "../../../libraries/cookie";
+import Link from "next/link";
+import { useListen } from "../../../hooks/useListen";
+import { useMetaMask } from "../../../hooks/useMetaMask";
 
-const Header = ({ }) => {
-  const [session, setSession] = useSession();
-  const [profileId, setProfileId] = useState('')
-  const router = useRouter();
-  const { locales, locale } = router
+import { Button, FlexContainer, FlexItem, } from "./../../styledComponents/general";
+import { NavigationView, Balance, RightNav, Logo } from "../.././styledComponents/navigation";
+import { SiEthereum } from 'react-icons/si';
+ 
+export default function Header() {
+  const {
+    dispatch,
+    state: { status, isMetaMaskInstalled, wallet, balance },
+  } = useMetaMask();
 
-  const { t } = useTranslation();
+  console.log("status, isMetaMaskInstalled, wallet, balance",status, isMetaMaskInstalled, wallet, balance)
 
+  const listen = useListen();
+
+  const showInstallMetaMask =
+    status !== "pageNotLoaded" && !isMetaMaskInstalled;
+  const showConnectButton =
+    status !== "pageNotLoaded" && isMetaMaskInstalled && !wallet;
+
+  const isConnected = status !== "pageNotLoaded" && typeof wallet === "string";
+
+  const handleConnect = async () => {
+    dispatch({ type: "loading" });
+    const accounts = await window.ethereum.request({
+      method: "eth_requestAccounts",
+    });
+
+    if (accounts.length > 0) {
+      const balance = await window.ethereum!.request({
+        method: "eth_getBalance",
+        params: [accounts[0], "latest"],
+      });
+      dispatch({ type: "connect", wallet: accounts[0], balance });
+
+      // we can register an event listener for changes to the user's wallet
+      listen();
+    }
+  };
+
+  const handleDisconnect = () => {
+    dispatch({ type: "disconnect" });
+  };
+
+  const formatAddress = (addr: string) => {
+    return `${addr.substr(0, 6)}...${addr.substr(-4)}`
+  }
 
   return (
-    <header className="connex-header mobile-none">
-      <nav className="connex-nav">
-        <ul className="menu-list">
-          <li>
-            <Link
-              href={profileId ? `https://safqat.com/store/suppliers/${profileId}` : "/"}
-              className="header-anchor"
-              target="_blank">
-              {t("viewMyStore")}
-            </Link>
-          </li>
-          <li>
-            <Link href="https://safqat.com/" className="header-anchor" target="_blank">
-              Visit safqat.com
-            </Link>
-          </li>
-        </ul>
-        <div className="connec_nav_suportLg">
-           <span className="support">{t("forSupportCall")} 
-            <Link href="#">+971 50 254 2100</Link>
-          </span>
-       
-          {/*
-            locale == "en" ?
-              <span className="language">
-                {<a onClick={(e) => { handleLanguageSwitchClick("ar") }} href={"/ar" + router.asPath}>عربى</a>}
-              </span>
-              :
-              <span className="language">
-                {<a onClick={(e) => { handleLanguageSwitchClick("en") }} href={"/en" + router.asPath}>English</a>}
-              </span>
-           */}
-        </div>
-      </nav>
-    </header>
+    <NavigationView>
+      <FlexContainer>
+        <FlexItem widthPercent={50}>
+          <Logo>
+            <SiEthereum /> ETH Atlantis
+          </Logo>
+        </FlexItem>
+        <FlexItem widthPercent={50}>
+          <RightNav widthPixel={300}>
+            {showConnectButton && (
+              <Button textSize={10} onClick={handleConnect}>
+                {status === "loading" ? "loading..." : "Connect Wallet"}
+              </Button>
+            )}
+            {showInstallMetaMask && (
+              <Link href="https://metamask.io/" target="_blank">
+                Install MetaMask
+              </Link>
+            )}
+            {wallet && balance && (
+              <>
+                {isConnected && <Button textSize={10} onClick={handleDisconnect}>Disconnect</Button>}
+                <a
+                  className="text_link tooltip-bottom"
+                  href={`https://etherscan.io/address/${wallet}`} target="_blank"
+                  data-tooltip="Open in Etherscan"
+                >
+                  {formatAddress(wallet)}
+                </a>
+                <Balance>
+                  {(parseInt(balance) / 1000000000000000000).toFixed(6)}{" "}ETH
+                </Balance>
+              </>
+            )}
+          </RightNav>
+        </FlexItem>
+      </FlexContainer>
+    </NavigationView>
   );
-};
-
-export default Header;
+}
