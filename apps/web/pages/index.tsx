@@ -43,11 +43,9 @@ const { TabPane } = Tabs;
 const { RangePicker } = DatePicker;
 const { Search } = Input;
 import Link from "next/link";
-import { useTranslation } from "react-i18next";
 import Navigation from "../components/Navigation";
 
 const Page = ({ session, formInputs }) => {
-  const { t } = useTranslation();
   const router = useRouter();
   const { locale: activeLocale } = router;
   const [form] = Form.useForm();
@@ -91,7 +89,7 @@ const Page = ({ session, formInputs }) => {
     };
     document.body.addEventListener("click", removeCalenderBox);
     return () => document.body.removeEventListener("click", removeCalenderBox);
-  }, []);
+  },[]);
 
   const onSearch = async (
     tab = "all",
@@ -172,14 +170,14 @@ const Page = ({ session, formInputs }) => {
   };
 
   const durationOptions = {
-    7: t("last7Days"),
-    14: t("last14Days"),
-    28: t("last28Days"),
-    90: t("last90Days"),
-    month: t("thisMonth"),
-    quarter: t("thisQuarter"),
-    all: t("allTime"),
-    custom: t("custom"),
+    7: "Last 7 Days",
+    14: "Last 14 Days",
+    28: "Last 28 Days",
+    90: "Last 90 Days",
+    month: "This Month",
+    quarter: "This Quarter",
+    all: "allTime",
+    custom: "custom",
   };
   const [pickerOpen, setPickerOpen] = useState(false);
   const [selectedDate, setselectedDate] = useState(null);
@@ -266,7 +264,7 @@ const Page = ({ session, formInputs }) => {
       </Head>
 
       <section className="rfq add-list-common">
-        <div className="mob-title d-lg-none">{t("rfqS")}</div>
+        <div className="mob-title d-lg-none">{"Features Vaults"}</div>
         <div className="calendar-field">
           <a
             className="custom-picker"
@@ -276,67 +274,7 @@ const Page = ({ session, formInputs }) => {
           >
             {durationOptions[selectedDuration]}
           </a>
-          <div className="dropdown-range-picker-wrapper">
-            <RangePicker
-              className="dropdown-range-picker"
-              open={pickerOpen}
-              format="DD/MM/YYYY"
-              value={selectedDate}
-              onChange={handleDateChange}
-              dropdownClassName="calendar-wrapper"
-              panelRender={(panelNode) => {
-                return (
-                  <div className="custom-range-picker">
-                    <div className="picker-selection">
-                      <Radio.Group
-                        value={selectedDuration}
-                        onChange={dateRangeChange}
-                      >
-                        <Radio value="7">{t("last7Days")}</Radio>
-                        <br></br>
-                        <Radio value="14">{t("last14Days")}</Radio>
-                        <br></br>
-                        <Radio value="28">{t("last28Days")}</Radio>
-                        <br></br>
-                        <Radio value="90">{t("last90Days")}</Radio>
-                        <br></br>
-                        <Radio value="month">{t("thisMonth")}</Radio>
-                        <br></br>
-                        <Radio value="quarter">{t("thisQuarter")}</Radio>
-                        <br></br>
-                        <Radio value="all">{t("allTime")}</Radio>
-                        <br></br>
-                        <Radio value="custom">{t("custom")}</Radio>
-                      </Radio.Group>
-                    </div>
-                    <div className="calendar">
-                      <div className="top">
-                        <div className="picker-body">{panelNode}</div>
-                      </div>
-                      <div className="date-format">
-                        {t("datesAreShownAsDubaiTime")}
-                      </div>
-                      <div className="bottom">
-                        <Button
-                          loading={countersLoading}
-                          onClick={submitPickerForm}
-                          className="form-save"
-                        >
-                          {t("update")}
-                        </Button>
-                        <Button
-                          onClick={hideRangePicker}
-                          className="form-cancel"
-                        >
-                          {t("cancel")}
-                        </Button>
-                      </div>
-                    </div>
-                  </div>
-                );
-              }}
-            />
-          </div>
+          
         </div>
 
         <div className="button-wrapper"></div>
@@ -406,13 +344,13 @@ const Page = ({ session, formInputs }) => {
         defaultActiveKey="all"
         tabBarExtraContent={
           <Button className="export-btn  mobile-none rfqexport_btn">
-            {t("exportAllRfqs")}
+            {"Export"}
             <ExportOutlined></ExportOutlined>
           </Button>
         }
         className="common-tabs"
       >
-        <TabPane tab={t("all")} key="all">
+        <TabPane tab={"All"} key="all">
           <section className="tab-area">
             <div className="list-search-area common-card">
               <div className="form-wrapper">
@@ -436,49 +374,17 @@ const Page = ({ session, formInputs }) => {
                     <div className="inner-wrapper">
                       <ul>
                         <li>
-                          <a className="filter filter-button">{t("filter")}</a>
+                          <a className="filter filter-button">{"Filter"}</a>
                           <ul className="drop-down-list">
-                            <li
-                              onClick={() => {
-                                loadProductFilterForm("buyer");
-                              }}
-                            >
-                              <a className="active">{t("buyer")}</a>
-                            </li>
-                            <li
-                              onClick={() => {
-                                loadProductFilterForm("status");
-                              }}
-                            >
-                              <a>{t("status")}</a>
-                            </li>
+                            
                           </ul>
                         </li>
                       </ul>
                       <ul>
                         <li>
-                          <a className="sort filter-button">{t("sort")}</a>
+                          <a className="sort filter-button">{"Sort"}</a>
                           <ul className="drop-down-list">
-                            <li>
-                              <a onClick={() => onSort("date-new")}>
-                                {t("rfqSortDateNew")}
-                              </a>
-                            </li>
-                            <li>
-                              <a onClick={() => onSort("date-old")}>
-                                {t("rfqSortDateOld")}
-                              </a>
-                            </li>
-                            <li>
-                              <a onClick={() => onSort("price-low")}>
-                                {t("rfqSortPriceLow")}
-                              </a>
-                            </li>
-                            <li>
-                              <a onClick={() => onSort("price-high")}>
-                                {t("rfqSortPriceHigh")}
-                              </a>
-                            </li>
+                            
                           </ul>
                         </li>
                       </ul>
@@ -544,7 +450,7 @@ const Page = ({ session, formInputs }) => {
                           <td className="promotion no">
                             <div class="button-wrapper">
                               <Link href={`/vaults/${token.address}`} className="view">
-                                {t("view")}
+                                {"view"}
                               </Link>
                               {/*<a className="message">Message</a>*/}
                             </div>
@@ -589,7 +495,6 @@ const Page = ({ session, formInputs }) => {
   );
 };
 const Breadcrumb = ({}) => {
-  const { t } = useTranslation();
 
   return (
     <>

@@ -9,9 +9,9 @@ const Footer = ({ }) => {
         Ut eu blandit neque. Praesent posuere velit in eros efficitur tempor.
         </p>*/}
         <p>Read our 
-        <a href="https://safqat.com/privacy-policy" target="_blank" style={{fontWeight: 500, color: "#da634a"}}> Privacy Policy </a>
+        <a href="/"  rel="noreferrer"  target="_blank" style={{fontWeight: 500, color: "#da634a"}}> Privacy Policy </a>
         and  
-        <a href="https://safqat.com/terms-and-conditions" target="_blank" style={{fontWeight: 500, color: "#da634a"}}> Terms & Conditions</a>
+        <a href="/"  rel="noreferrer"  target="_blank" style={{fontWeight: 500, color: "#da634a"}}> Terms & Conditions</a>
       .</p>
       </div>
       <div className="copy-right">

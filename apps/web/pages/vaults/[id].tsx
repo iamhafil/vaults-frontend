@@ -35,7 +35,6 @@ import {
 import { api } from "../../libraries/api";
 import moment from "moment";
 import Link from "next/link";
-import { useTranslation } from "react-i18next";
 const { TextArea } = Input;
 const { confirm } = Modal;
 const { TabPane } = Tabs;
@@ -53,7 +52,6 @@ const { TabPane } = Tabs;
 // } from "recharts";
 
 const Page = ({ session, formFields }) => {
-  const { t } = useTranslation();
 
   const router = useRouter();
   const { locale: activeLocale } = router;
@@ -72,7 +70,7 @@ const Page = ({ session, formFields }) => {
       .catch(function (error) {
         console.error(error);
       });
-  }, []);
+  }, [router,id]);
 
   const changeTab = async (key) => {};
 
@@ -513,7 +511,6 @@ const Page = ({ session, formFields }) => {
   );
 };
 const Breadcrumb = ({}) => {
-  const { t } = useTranslation();
   let [session, isLogged] = useSession();
   const router = useRouter();
   const { id } = router.query;
@@ -531,7 +528,7 @@ const Breadcrumb = ({}) => {
       .catch(function (error) {
         console.error(error);
       });
-  }, []);
+  });
 
   return (
     <>

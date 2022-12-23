@@ -1,5 +1,5 @@
 import React from 'react';
-import MobileMenu from './MobileMenu';
+// import MobileMenu from './MobileMenu';
 import SideBar from './Sidebar';
 
 
@@ -7,7 +7,7 @@ const Navigation = ({ }) => {
     return (
         <React.Fragment>
             <SideBar></SideBar>
-            <MobileMenu></MobileMenu>
+            {/* <MobileMenu></MobileMenu> */}
         </React.Fragment>
     );
 }

@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { useSession, getSession, signIn, signOut } from "next-auth/client";
 import { useRouter } from "next/router";
-import { useTranslation } from "react-i18next";
 
 const Menu = ({ children }) => {
   const router = useRouter();
@@ -210,7 +209,6 @@ const SubMenuItem = ({ title, link }) => {
 };
 
 const SideBar = ({ }) => {
-  const { t } = useTranslation();
   const [session, loading] = useSession();
   let array = [
     "seller.products",
