@@ -3,13 +3,7 @@ import { useRouter } from "next/router";
 import Router from "next/router";
 import React, { useState, useEffect } from "react";
 import UserPanel from "../../components/Layout/Default/UserPanel";
-import {
-  getCsrfToken,
-  useSession,
-  getSession,
-  signIn,
-  signOut,
-} from "next-auth/client";
+
 import {
   Button,
   Form,
@@ -511,7 +505,6 @@ const Page = ({ session, formFields }) => {
   );
 };
 const Breadcrumb = ({}) => {
-  let [session, isLogged] = useSession();
   const router = useRouter();
   const { id } = router.query;
   const [rfqData, setRfqData] = useState({});
@@ -553,16 +546,7 @@ export default Page;
 
 export async function getServerSideProps(context) {
   const { req, res, params, locale } = context;
-  const session = await getSession(context);
-
-  if (!session) {
-    // return {
-    //   redirect: {
-    //     destination: "/auth/signin",
-    //     permanent: false,
-    //   },
-    // };
-  }
+  const session = {}
   let rfq = {};
   let formFields = {};
   try {

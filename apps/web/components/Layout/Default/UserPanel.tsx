@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { useSession, getSession, signIn, signOut } from "next-auth/client";
 import { Modal } from "antd";
 import Help from "./help";
 import { api } from "../../../libraries/api";
 
 const UserPanel = ({ Breadcrumb }) => {
-  const [session, loading] = useSession();
   const [visible, setVisible] = useState(false);
   const [supplierLogo, setSupplierLogo] = useState();
   const [supplierName, setSupplierName] = useState();
