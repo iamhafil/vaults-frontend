@@ -40,6 +40,18 @@ const { TextArea } = Input;
 const { confirm } = Modal;
 const { TabPane } = Tabs;
 
+// import {
+//   LineChart,
+//   Line,
+//   XAxis,
+//   YAxis,
+//   CartesianGrid,
+//   Tooltip,
+//   Legend,
+//   Label,
+//   ResponsiveContainer,
+// } from "recharts";
+
 const Page = ({ session, formFields }) => {
   const { t } = useTranslation();
 
@@ -48,6 +60,7 @@ const Page = ({ session, formFields }) => {
   const { id } = router.query;
   const [data, setData] = useState();
   const [form] = Form.useForm();
+  const [isApprovalNeeded, setIsApprovalNeeded] = useState(false);
 
   useEffect(() => {
     api
@@ -67,7 +80,20 @@ const Page = ({ session, formFields }) => {
     console.log("Failed:", errorInfo);
   };
 
-  const onFinish = (values) => {};
+  const onFinish = (values) => {
+    console.log(values);
+    //condition check and call required method
+    if (isApprovalNeeded) {
+      //call approval method
+    } else {
+      //call deposit method
+    }
+  };
+
+  const handleAmountOnchange = async (event) => {
+    //add allowance check here
+    // if allowance needed call setIsApprovalNeeded(true) else setIsApprovalNeeded(false)
+  };
 
   return (
     <React.Fragment>
@@ -85,16 +111,16 @@ const Page = ({ session, formFields }) => {
                 </div>
                 <div className="content-wrapper">
                   <div className="title">Total deposited</div>
-                  <div className="number">{"20,113"}</div>
+                  <div className="number">
+                    {Number(data?.tvl?.tvl_deposited).toFixed(2)}
+                  </div>
                   <div className="wrapper">
                     {/* <div className="description">
                       {t("rfqReceivedTillDate")}
                     </div> */}
                     <div className="value-wrapper">
                       <span className="label"></span>
-                      <span className="value">
-                        {"10,500,298.71"}
-                      </span>
+                      <span className="value">{"10,500,298.71"}</span>
                     </div>
                   </div>
                   {/*
@@ -112,7 +138,9 @@ const Page = ({ session, formFields }) => {
                 </div>
                 <div className="content-wrapper">
                   <div className="title">Net APY</div>
-                  <div className="number">{"47.72%"}</div>
+                  <div className="number">
+                    {Number(data?.apy?.net_apy).toFixed(2)}%
+                  </div>
                   <div className="wrapper">
                     {/* <div className="description">
                       {t("rfqReceivedTillDate")}
@@ -139,14 +167,12 @@ const Page = ({ session, formFields }) => {
                   <span className="icon"></span>
                 </div>
                 <div className="content-wrapper">
-                  <div className="title">Balance, st-yCRV</div>
+                  <div className="title">Balance</div>
                   <div className="number">{"0.00"}</div>
                   <div className="wrapper">
                     <div className="value-wrapper">
                       <span className="label"></span>
-                      <span className="value">
-                        {"0.00"}
-                      </span>
+                      <span className="value">{"0.00"}</span>
                     </div>
                   </div>
                   {/*
@@ -164,15 +190,12 @@ const Page = ({ session, formFields }) => {
                   <span className="icon"></span>
                 </div>
                 <div className="content-wrapper">
-                  <div className="title">Earned, yCRV</div>
+                  <div className="title">Earned</div>
                   <div className="number">{"0.00"}</div>
                   <div className="wrapper">
-                    
                     <div className="value-wrapper">
                       <span className="label"></span>
-                      <span className="value">
-                        {"0.00"}
-                      </span>
+                      <span className="value">{"0.00"}</span>
                     </div>
                   </div>
                   {/*
@@ -232,7 +255,7 @@ const Page = ({ session, formFields }) => {
                       rules={[{ required: true, message: "" }]}
                       name="from"
                     >
-                      <Input placeholder="SL-0001" readOnly />
+                      <Input placeholder="SL-0001" />
                     </Form.Item>
                   </div>
                   <div className="col-xl-2 col-lg-2 col-md-2">
@@ -241,7 +264,7 @@ const Page = ({ session, formFields }) => {
                       rules={[{ required: true, message: "" }]}
                       name="amount"
                     >
-                      <Input placeholder="10" />
+                      <Input placeholder="10" onChange={handleAmountOnchange} />
                     </Form.Item>
                   </div>
                   <div className="col-xl-2 col-lg-2 col-md-2">
@@ -250,7 +273,7 @@ const Page = ({ session, formFields }) => {
                       rules={[{ required: true, message: "" }]}
                       name="to"
                     >
-                      <Input placeholder="SL-0001" readOnly />
+                      <Input placeholder={"SL-0001"} />
                     </Form.Item>
                   </div>
                   <div className="col-xl-2 col-lg-2 col-md-2">
@@ -265,15 +288,29 @@ const Page = ({ session, formFields }) => {
 
                   <div className="col-xl-2 col-lg-2 col-md-2">
                     <Form.Item label={" "} name="recieve">
-                      <Button
-                        style={{}}
-                        className="form-save"
-                        key="submit"
-                        htmlType="submit"
-                        type="primary"
-                      >
-                        {"Approve"}
-                      </Button>
+                      {isApprovalNeeded ? (
+                        <Button
+                          style={{}}
+                          className="form-save"
+                          key="submit"
+                          htmlType="submit"
+                          type="primary"
+                          value={""}
+                        >
+                          {"Approve"}
+                        </Button>
+                      ) : (
+                        <Button
+                          style={{}}
+                          className="form-save"
+                          key="submit"
+                          htmlType="submit"
+                          type="primary"
+                          value={""}
+                        >
+                          {"Deposit"}
+                        </Button>
+                      )}
                     </Form.Item>
                   </div>
                 </div>
@@ -303,7 +340,7 @@ const Page = ({ session, formFields }) => {
                             <h5>Description</h5>
                           </div>
                           <div className="description">
-                            <p>yCRV is Yearn Finance's new and improved veCRV wrapper system designed to tokenize Yearn's veCRV position which passes all revenue and benefits along to users. This system is composed of a base-token called yCRV which a user can deposit into any one of three `activated` positons to earn yield or voting power: st-yCRV, lp-yCRV, and vl-yCRV. st-yCRV yVault receives admin fees and bribes from locked CRV. lp-yCRV yVault converts yCRV into CRV/yCRV LP tokens and uses them to farm CRV emissions and trading fees. vl-yCRV yVault is for voting power on Curve.fi gauge weights.</p>
+                            <p>{data?.token?.description}</p>
                           </div>
                         </div>
                       </div>
@@ -313,9 +350,67 @@ const Page = ({ session, formFields }) => {
                           <div className="title">
                             <h5>Chart</h5>
                           </div>
-                          <div className="description">
-                            <p>{"data?.notes"}</p>
-                          </div>
+                          <section className="db-sales">
+                            <div className="grid-wrapper">
+                              <div className="row">
+                                <div className="col-md-12 col-lg-9 col-12 col">
+                                  <div className="common-card sale-summary">
+                                    {/* <ResponsiveContainer
+                                      width="100%"
+                                      height="100%"
+                                    >
+                                      <LineChart
+                                        width={500}
+                                        height={240}
+                                        data={chartData}
+                                        margin={{
+                                          top: 0,
+                                          right: 0,
+                                          left: 20,
+                                          bottom: 8,
+                                        }}
+                                      >
+                                        <CartesianGrid strokeDasharray="7" />
+                                        <XAxis
+                                          dataKey="name"
+                                          label={{
+                                            value: t("orderDate"),
+                                            offset: -7,
+                                            position: "insideBottom",
+                                          }}
+                                        />
+                                        <YAxis
+                                          dataKey="uv"
+                                          tickFormatter={DataFormater}
+                                        >
+                                          <Label
+                                            value={t("totalSalesValue")}
+                                            position="insideLeft"
+                                            offset={-5}
+                                            angle={-90}
+                                            style={{ textAnchor: "middle" }}
+                                          />
+                                        </YAxis>
+                                        <Tooltip />
+                                        <Legend
+                                          verticalAlign="top"
+                                          height={36}
+                                        />
+                                        <Line
+                                          // name="revenue"
+                                          type="monotone"
+                                          dataKey="amt"
+                                          name="Order Value"
+                                          stroke="#da634a"
+                                          tickFormatter={DataFormater}
+                                        />
+                                      </LineChart>
+                                    </ResponsiveContainer> */}
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </section>
                         </div>
                       </div>
                     </div>
@@ -332,57 +427,37 @@ const Page = ({ session, formFields }) => {
               <div className="col-md-12 col">
                 <div className="common-card rfq-details">
                   <div className="grid-wrapper">
-                    <div className="top-wrapper">
-                      <div className="left-wrapper">
-                        <div
-                          className="image-wrapper"
-                          style={{
-                            background: "",
-                          }}
-                        ></div>
-                        <div className="description">
-                          <div class="top-wrap">
-                            <div
-                              className="title"
-                              title={"line?.product?.name"}
-                            >
-                              {"line?.product?.name.length"}
-                            </div>
-                            <div className="sub-title">
-                              Price : {"line?.product?.price"}
-                            </div>
+                    <div className="row">
+                      <div className="col-md-7 col">
+                        <div className="top-wrapper">
+                          <div className="title">
+                            <h5>Strategies</h5>
                           </div>
-                          <div className="bottom-wrap">
-                            <div className="title">{"Country of Origin"}</div>
-                            {/* <div className="sub-title">Brand : {line?.product?.brand}</div> */}
-                          </div>
-                        </div>
-                      </div>
-                      <div className="right-wrapper">
-                        <div className="top-wrap">
-                          <div className="title">{t("priceRequested")}</div>
-                          <div className="quantity">{"line.price"}</div>
-                        </div>
-                        <div className="top-wrap">
-                          <div className="title">{t("quantityRequested")}</div>
-                          <div className="quantity">{"line.quantity"}</div>
-                          <div className="unit">Unit</div>
-                        </div>
-                        <div class="bottom-wrap">
-                          {/*<div className="title">RFQ Expire Date</div>
-                          <div className="sub-title">
-                            {moment(data.expiry).format("DD MMMM YYYY")}
-                          </div>*/}
-                        </div>
-                      </div>
-                    </div>
+                          {data?.strategies?.map((stargey, index) => {
+                            return (
+                              <Descriptions title="" layout="horizontal" column={1} bordered>
+                                
+                                <Descriptions.Item label="Address" >
+                                  {stargey.address}
+                                </Descriptions.Item>
 
-                    <div className="bottom-wrapper">
-                      <div className="title">
-                        {t("rfqMessageFrom")} {"data?.buyer?.storeName"}
-                      </div>
-                      <div className="description">
-                        <p>{"data?.notes"}</p>
+
+                                <Descriptions.Item label="Name">
+                                {stargey.name}
+                                </Descriptions.Item>
+
+
+
+                                <Descriptions.Item label="Description" span={2}>
+                                  <p>
+                                  {stargey.description}
+                                  </p>
+                                </Descriptions.Item>
+                              </Descriptions>
+                              
+                            );
+                          })}
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -508,7 +583,10 @@ const Breadcrumb = ({}) => {
 
   return (
     <>
-      <h1 className="back-heading"> {rfqData.display_name}</h1>
+      <h1 className="back-heading">
+        {" "}
+        {rfqData.display_name} - {rfqData.symbol}
+      </h1>
       <div className="status-date">
         <span className="status pending">{rfqData.status}</span>
         <span className="date">Address - {rfqData.address}</span>

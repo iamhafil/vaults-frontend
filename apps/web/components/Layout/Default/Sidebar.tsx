@@ -253,13 +253,13 @@ const SideBar = ({ }) => {
                 href="/"
               ></MenuItem>
 
-              <MenuItem
+              {/* <MenuItem
                 index="products"
                 menuClassName="product"
                 title={"Vaults"}
                 subtitle={""}
                 href="#"
-              ></MenuItem>
+              ></MenuItem> */}
              
             </Menu>
           </div>
