@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import { useSession, getSession, signIn, signOut } from "next-auth/client";
 import { useRouter } from "next/router";
 
 const Menu = ({ children }) => {
@@ -209,7 +208,7 @@ const SubMenuItem = ({ title, link }) => {
 };
 
 const SideBar = ({ }) => {
-  const [session, loading] = useSession();
+
   let array = [
     "seller.products",
     "seller.orders",

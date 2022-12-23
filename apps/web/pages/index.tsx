@@ -2,13 +2,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import React, { useState, useEffect, useRef } from "react";
 import UserPanel from "../components/Layout/Default/UserPanel";
-import {
-  getCsrfToken,
-  useSession,
-  getSession,
-  signIn,
-  signOut,
-} from "next-auth/client";
+
 import {
   Button,
   Form,
@@ -512,16 +506,7 @@ export default Page;
 
 export async function getServerSideProps(context) {
   const { req, query, params, locale } = context;
-  const session = await getSession(context);
-
-  if (!session) {
-    // return {
-    //   redirect: {
-    //     destination: "/auth/signin",
-    //     permanent: false,
-    //   },
-    // };
-  }
+  const session =  {}
   let formInputs = {};
   try {
   } catch (err) {
