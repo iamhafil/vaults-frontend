@@ -262,7 +262,7 @@ const Page = ({ session, formInputs }) => {
   return (
     <React.Fragment>
       <Head>
-        <title>{t("rfqTitle")}</title>
+        <title>{"Yeeldx - Vaults List"}</title>
       </Head>
 
       <section className="rfq add-list-common">

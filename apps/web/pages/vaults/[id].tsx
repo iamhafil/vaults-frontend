@@ -98,7 +98,7 @@ const Page = ({ session, formFields }) => {
   return (
     <React.Fragment>
       <Head>
-        <title>{t("rfqTitle")}</title>
+        <title>{data?.name} - Yeeldx</title>
       </Head>
 
       <section className="rfq-updates Blade_rfq_updates">
@@ -435,26 +435,24 @@ const Page = ({ session, formFields }) => {
                           </div>
                           {data?.strategies?.map((stargey, index) => {
                             return (
-                              <Descriptions title="" layout="horizontal" column={1} bordered>
-                                
-                                <Descriptions.Item label="Address" >
+                              <Descriptions
+                                title=""
+                                layout="horizontal"
+                                column={1}
+                                bordered
+                              >
+                                <Descriptions.Item label="Address">
                                   {stargey.address}
                                 </Descriptions.Item>
 
-
                                 <Descriptions.Item label="Name">
-                                {stargey.name}
+                                  {stargey.name}
                                 </Descriptions.Item>
-
-
 
                                 <Descriptions.Item label="Description" span={2}>
-                                  <p>
-                                  {stargey.description}
-                                  </p>
+                                  <p>{stargey.description}</p>
                                 </Descriptions.Item>
                               </Descriptions>
-                              
                             );
                           })}
                         </div>
@@ -463,18 +461,6 @@ const Page = ({ session, formFields }) => {
                   </div>
                 </div>
               </div>
-            </div>
-
-            <div className="button-wrapper">
-              <Button
-                style={{ marginRight: 6 }}
-                className="form-save rfqform_save"
-                key="submit6"
-                htmlType="submit"
-                type="primary"
-              >
-                {t("sendQuotation")}
-              </Button>
             </div>
           </section>
         </TabPane>
@@ -485,74 +471,40 @@ const Page = ({ session, formFields }) => {
               <div className="col-md-12 col">
                 <div className="common-card rfq-details">
                   <div className="grid-wrapper">
-                    <div className="top-wrapper">
-                      <div className="left-wrapper">
-                        <div
-                          className="image-wrapper"
-                          style={{
-                            background: "",
-                          }}
-                        ></div>
-                        <div className="description">
-                          <div class="top-wrap">
-                            <div
-                              className="title"
-                              title={"line?.product?.name"}
-                            >
-                              {"line?.product?.name.length"}
-                            </div>
-                            <div className="sub-title">
-                              Price : {"line?.product?.price"}
-                            </div>
+                    <div className="row">
+                      <div className="col-md-7 col">
+                        <div className="top-wrapper">
+                          <div className="title">
+                            <h5>Strategies</h5>
                           </div>
-                          <div className="bottom-wrap">
-                            <div className="title">{"Country of Origin"}</div>
-                            {/* <div className="sub-title">Brand : {line?.product?.brand}</div> */}
-                          </div>
-                        </div>
-                      </div>
-                      <div className="right-wrapper">
-                        <div className="top-wrap">
-                          <div className="title">{t("priceRequested")}</div>
-                          <div className="quantity">{"line.price"}</div>
-                        </div>
-                        <div className="top-wrap">
-                          <div className="title">{t("quantityRequested")}</div>
-                          <div className="quantity">{"line.quantity"}</div>
-                          <div className="unit">Unit</div>
-                        </div>
-                        <div class="bottom-wrap">
-                          {/*<div className="title">RFQ Expire Date</div>
-                          <div className="sub-title">
-                            {moment(data.expiry).format("DD MMMM YYYY")}
-                          </div>*/}
-                        </div>
-                      </div>
-                    </div>
+                          {data?.strategies?.map((stargey, index) => {
+                            return (
+                              <Descriptions
+                                title=""
+                                layout="horizontal"
+                                column={1}
+                                bordered
+                              >
+                                <Descriptions.Item label="Address">
+                                  {stargey.address}
+                                </Descriptions.Item>
 
-                    <div className="bottom-wrapper">
-                      <div className="title">
-                        {t("rfqMessageFrom")} {"data?.buyer?.storeName"}
-                      </div>
-                      <div className="description">
-                        <p>{"data?.notes"}</p>
+                                <Descriptions.Item label="Name">
+                                  {stargey.name}
+                                </Descriptions.Item>
+
+                                <Descriptions.Item label="Description" span={2}>
+                                  <p>{stargey.description}</p>
+                                </Descriptions.Item>
+                              </Descriptions>
+                            );
+                          })}
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-
-            <div className="button-wrapper">
-              <Button
-                style={{ marginRight: 6 }}
-                className="form-save rfqform_save"
-                key="submit6"
-                htmlType="submit"
-                type="primary"
-              >
-                {t("sendQuotation")}
-              </Button>
             </div>
           </section>
         </TabPane>
