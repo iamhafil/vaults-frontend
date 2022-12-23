@@ -73,6 +73,7 @@ export default function Navigation() {
                   className="text_link tooltip-bottom"
                   href={`https://etherscan.io/address/${wallet}`} target="_blank"
                   data-tooltip="Open in Etherscan"
+                  rel="noreferrer"
                 >
                   {formatAddress(wallet)}
                 </a>
